@@ -1,0 +1,88 @@
+<section class="gh-canvas">
+    <header class="gh-canvas-header">
+        <h2 class="gh-canvas-title">Labs</h2>
+    </header>
+
+    <section class="view-container settings-debug">
+        <p class="gh-box gh-box-info"><i class="icon-idea"></i>This is a testing ground for experimental features which aren't quite ready for primetime. They may change, break or inexplicably disappear at any time.</p>
+
+        <div class="gh-setting-header">Migration options</div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Import content</div>
+                <div class="gh-setting-desc">Import posts from another Ghost installation</div>
+                {{partial "import-errors"}}
+            </div>
+            <div class="gh-setting-action">
+                <form id="settings-import" enctype="multipart/form-data">
+                    {{gh-file-upload id="importfile" classNames="flex" uploadButtonText=uploadButtonText onUpload="onUpload" acceptEncoding=importMimeType}}
+                </form>
+            </div>
+        </div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Export your content</div>
+                <div class="gh-setting-desc">Download all of your posts and settings in a single, glorious JSON file</div>
+            </div>
+            <div class="gh-setting-action">
+                <button type="button" class="gh-btn gh-btn-hover-blue" {{action "exportData"}}><span>Export</span></button>
+            </div>
+        </div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Delete all content</div>
+                <div class="gh-setting-desc">Permanently delete all posts and tags from the database, a hard reset</div>
+            </div>
+            <div class="gh-setting-action">
+                <button type="button" class="gh-btn gh-btn-hover-red js-delete" {{action "toggleDeleteAllModal"}}><span>Delete</span></button>
+            </div>
+        </div>
+
+        <div class="gh-setting-header">Testing tools</div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Test email configuration</div>
+                <div class="gh-setting-desc">Send yourself a test email to make sure everything is working</div>
+            </div>
+            <div class="gh-setting-action">
+                {{#gh-spin-button id="sendtestemail" class="gh-btn gh-btn-hover-blue" action="sendTestEmail" submitting=submitting}}<span>Send</span>{{/gh-spin-button}}
+            </div>
+        </div>
+
+        <div class="gh-setting-header">Beta features</div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Public API</div>
+                <div class="gh-setting-desc">For full instructions, read the <a href="http://support.ghost.org/public-api-beta/">developer guide</a></div>
+            </div>
+            <div class="gh-setting-action">
+                <div class="for-checkbox">{{gh-feature-flag "publicAPI"}}</div>
+            </div>
+        </div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Night shift</div>
+                <div class="gh-setting-desc">Swap Ghost admin's colours to a dark background which is easy on the eyes</div>
+            </div>
+            <div class="gh-setting-action">
+                <div class="for-checkbox">{{gh-feature-flag "nightShift"}}</div>
+            </div>
+        </div>
+        <div class="gh-setting">
+            <div class="gh-setting-content">
+                <div class="gh-setting-title">Subscribers</div>
+                <div class="gh-setting-desc">Collect email addresses from your readers, more info in <a href="http://support.ghost.org/subscribers-beta/">the docs</a></div>
+            </div>
+            <div class="gh-setting-action">
+                <div class="for-checkbox">{{gh-feature-flag "subscribers"}}</div>
+            </div>
+        </div>
+
+    </section>
+</section>
+
+{{#if showDeleteAllModal}}
+    {{gh-fullscreen-modal "delete-all"
+                          close=(action "toggleDeleteAllModal")
+                          modifier="action wide"}}
+{{/if}}
